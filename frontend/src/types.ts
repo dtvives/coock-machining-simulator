@@ -1,0 +1,125 @@
+export type Settings = {
+  scenario_id: string;
+  mode: "trial" | "week";
+  speed_m_min: number;
+  feed_mm_rev: number;
+  change_after_parts: number;
+  inspect_every: number;
+  quantity: number;
+  seed: number;
+  logging: boolean;
+  stop_on_reject: boolean;
+  release_policy: "sample" | "final";
+  inspection_offset: number;
+};
+export type Scenario = {
+  id: string;
+  title: string;
+  description: string;
+  material: string;
+  initial_diameter_mm: number;
+  final_diameter_mm: number;
+  length_mm: number;
+  ra_limit_um: number;
+  diameter_tolerance_mm: number;
+  days: number;
+  shift_minutes: number;
+  defaults: Partial<Settings>;
+};
+export type Part = {
+  number: number;
+  time_minutes: number;
+  ra_um: number;
+  diameter_mm: number;
+  wear: number;
+  good: boolean;
+  inspected: boolean;
+  observed_good: boolean | null;
+  tool_number: number;
+  age_on_edge: number;
+  inspection_kind: string | null;
+  observed_time_minutes: number | null;
+};
+export type Result = {
+  model_version: string;
+  settings: Settings;
+  scenario_snapshot: Scenario;
+  process: {
+    cutting_minutes: number;
+    cycle_minutes: number;
+    rpm_by_pass: number[];
+    theoretical_ra_um: number;
+    tool_life_minutes: number;
+    profile: {
+      points: { x_mm: number; y_um: number }[];
+      feed_mm_rev: number;
+      height_um: number;
+      width_mm: number;
+    };
+    passes: number;
+    removed_volume_cm3: number;
+  };
+  summary: {
+    released: number;
+    pending_release: number;
+    supplemental_produced: number;
+    final_inspections: number;
+    release_on_time: boolean;
+    cost_per_released_eur: number | null;
+    produced: number;
+    good: number;
+    rejected: number;
+    inspected: number;
+    detected_rejects: number;
+    uninspected: number;
+    nominal_accepted: number;
+    accepted_unverified: number;
+    tools_used: number;
+    tool_changes: number;
+    cutting_minutes: number;
+    elapsed_minutes: number;
+    working_minutes: number;
+    available_minutes: number;
+    downtime_minutes: Record<string, number>;
+    total_cost_eur: number;
+    cost_per_good_eur: number | null;
+    on_time: boolean;
+    order_target: number;
+    completion_fraction: number;
+    final_wear: number;
+    unfinished_operation: string | null;
+    cost_breakdown_eur: Record<string, number>;
+    unused_minutes: number;
+  };
+  parts: Part[];
+  playback_events: ProductionEvent[];
+  events: {
+    kind: string;
+    start_minutes: number;
+    duration_minutes: number;
+    part_number: number | null;
+  }[];
+};
+export type ProductionEvent = {
+  kind: string;
+  start_minutes: number;
+  duration_minutes: number;
+  part_number: number | null;
+};
+export type Run = {
+  decisions?: { value: string; at: string; afterReveal: boolean }[];
+  revealedAt?: string;
+  id: string;
+  name: string;
+  prediction: string;
+  reflection: string;
+  result: Result;
+};
+export type Session = {
+  format: "coock-workshop-v2";
+  settings: Settings;
+  runs: Run[];
+  baseline: string | null;
+  prediction: string;
+  reflection: string;
+};

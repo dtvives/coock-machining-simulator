@@ -1,0 +1,12 @@
+.venv/
+.tmp/
+.npm-cache/
+frontend/node_modules/
+frontend/dist/
+__pycache__/
+*.pyc
+.pytest_cache/
+data/
+*.log
+artifacts/
+

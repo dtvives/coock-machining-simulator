@@ -1,0 +1,681 @@
+{
+  "model_version": "1.0.0",
+  "cases": [
+    {
+      "case": "Beginnerproef",
+      "expectation": "Tien stukken, bruikbare kwaliteit.",
+      "settings": {
+        "scenario_id": "steel-shaft",
+        "mode": "trial",
+        "speed_m_min": 180.0,
+        "feed_mm_rev": 0.18,
+        "change_after_parts": 20,
+        "inspect_every": 5,
+        "quantity": 10,
+        "seed": 42,
+        "logging": true,
+        "stop_on_reject": false
+      },
+      "summary": {
+        "produced": 10,
+        "good": 10,
+        "rejected": 0,
+        "inspected": 3,
+        "detected_rejects": 0,
+        "uninspected": 7,
+        "nominal_accepted": 10,
+        "accepted_unverified": 7,
+        "tools_used": 1,
+        "tool_changes": 0,
+        "cutting_minutes": 6.201736608753184,
+        "elapsed_minutes": 17.80173660875319,
+        "working_minutes": 17.80173660875319,
+        "available_minutes": 2400.0,
+        "downtime_minutes": {
+          "handling": 7.999999999999999,
+          "inspection": 3.5999999999999996,
+          "tool_change": 0.0,
+          "shift_wait": 0.0
+        },
+        "total_cost_eur": 70.25217076094148,
+        "cost_per_good_eur": 7.025217076094148,
+        "cost_breakdown_eur": {
+          "machine": 22.252170760941485,
+          "material": 40.0,
+          "tools": 8.0
+        },
+        "on_time": true,
+        "order_target": 10,
+        "completion_fraction": 1.0,
+        "final_wear": 0.24806946435012742,
+        "unused_minutes": 2382.1982633912467,
+        "loaded_stock": 10,
+        "unfinished_operation": null
+      }
+    },
+    {
+      "case": "Week uitgangssituatie",
+      "expectation": "Order haalbaar met basisscenario.",
+      "settings": {
+        "scenario_id": "steel-shaft",
+        "mode": "week",
+        "speed_m_min": 180.0,
+        "feed_mm_rev": 0.18,
+        "change_after_parts": 20,
+        "inspect_every": 5,
+        "quantity": 800,
+        "seed": 42,
+        "logging": true,
+        "stop_on_reject": false
+      },
+      "summary": {
+        "produced": 800,
+        "good": 800,
+        "rejected": 0,
+        "inspected": 161,
+        "detected_rejects": 0,
+        "uninspected": 639,
+        "nominal_accepted": 800,
+        "accepted_unverified": 639,
+        "tools_used": 40,
+        "tool_changes": 39,
+        "cutting_minutes": 496.1389287002503,
+        "elapsed_minutes": 4326.33892870031,
+        "working_minutes": 1446.3389287002342,
+        "available_minutes": 2400.0,
+        "downtime_minutes": {
+          "handling": 639.9999999999978,
+          "inspection": 193.1999999999996,
+          "tool_change": 117.0,
+          "shift_wait": 2880.0
+        },
+        "total_cost_eur": 5327.923660875293,
+        "cost_per_good_eur": 6.659904576094116,
+        "cost_breakdown_eur": {
+          "machine": 1807.9236608752929,
+          "material": 3200.0,
+          "tools": 320.0
+        },
+        "on_time": true,
+        "order_target": 800,
+        "completion_fraction": 1.0,
+        "final_wear": 0.49613892870025483,
+        "unused_minutes": 953.6610712997658,
+        "loaded_stock": 800,
+        "unfinished_operation": null
+      }
+    },
+    {
+      "case": "Alleen cyclustijd",
+      "expectation": "Kortere snijtijd kan volledige afkeur opleveren.",
+      "settings": {
+        "scenario_id": "steel-shaft",
+        "mode": "week",
+        "speed_m_min": 300.0,
+        "feed_mm_rev": 0.4,
+        "change_after_parts": 20,
+        "inspect_every": 5,
+        "quantity": 800,
+        "seed": 42,
+        "logging": true,
+        "stop_on_reject": false
+      },
+      "summary": {
+        "produced": 1001,
+        "good": 0,
+        "rejected": 1001,
+        "inspected": 201,
+        "detected_rejects": 201,
+        "uninspected": 800,
+        "nominal_accepted": 800,
+        "accepted_unverified": 800,
+        "tools_used": 51,
+        "tool_changes": 50,
+        "cutting_minutes": 177.42924857812457,
+        "elapsed_minutes": 3289.4292485780734,
+        "working_minutes": 1369.4292485781548,
+        "available_minutes": 2400.0,
+        "downtime_minutes": {
+          "handling": 800.7999999999887,
+          "inspection": 241.19999999999914,
+          "tool_change": 150.0,
+          "shift_wait": 1920.0
+        },
+        "total_cost_eur": 6123.786560722693,
+        "cost_per_good_eur": null,
+        "cost_breakdown_eur": {
+          "machine": 1711.7865607226934,
+          "material": 4004.0,
+          "tools": 408.0
+        },
+        "on_time": false,
+        "order_target": 800,
+        "completion_fraction": 0.0,
+        "final_wear": 0.05856271417383226,
+        "unused_minutes": 1030.5707514218452,
+        "loaded_stock": 1001,
+        "unfinished_operation": null
+      }
+    },
+    {
+      "case": "Voorzichtig",
+      "expectation": "Goede kwaliteit maar mogelijk levertekort.",
+      "settings": {
+        "scenario_id": "steel-shaft",
+        "mode": "week",
+        "speed_m_min": 80.0,
+        "feed_mm_rev": 0.08,
+        "change_after_parts": 20,
+        "inspect_every": 5,
+        "quantity": 800,
+        "seed": 42,
+        "logging": true,
+        "stop_on_reject": false
+      },
+      "summary": {
+        "produced": 554,
+        "good": 554,
+        "rejected": 0,
+        "inspected": 111,
+        "detected_rejects": 0,
+        "uninspected": 443,
+        "nominal_accepted": 554,
+        "accepted_unverified": 443,
+        "tools_used": 28,
+        "tool_changes": 27,
+        "cutting_minutes": 1741.799999999933,
+        "elapsed_minutes": 6240.0,
+        "working_minutes": 2399.9999999999404,
+        "available_minutes": 2400.0,
+        "downtime_minutes": {
+          "handling": 444.00000000000415,
+          "inspection": 133.20000000000016,
+          "tool_change": 81.0,
+          "shift_wait": 3840.0
+        },
+        "total_cost_eur": 5443.999999999925,
+        "cost_per_good_eur": 9.82671480144391,
+        "cost_breakdown_eur": {
+          "machine": 2999.9999999999254,
+          "material": 2220.0,
+          "tools": 224.0
+        },
+        "on_time": false,
+        "order_target": 800,
+        "completion_fraction": 0.6925,
+        "final_wear": 0.05452383576103046,
+        "unused_minutes": 5.95719029661268e-11,
+        "loaded_stock": 555,
+        "unfinished_operation": "cutting"
+      }
+    },
+    {
+      "case": "Vroeg wisselen",
+      "expectation": "Meer snijkanten en hogere kosten.",
+      "settings": {
+        "scenario_id": "steel-shaft",
+        "mode": "week",
+        "speed_m_min": 180.0,
+        "feed_mm_rev": 0.18,
+        "change_after_parts": 5,
+        "inspect_every": 5,
+        "quantity": 800,
+        "seed": 42,
+        "logging": true,
+        "stop_on_reject": false
+      },
+      "summary": {
+        "produced": 800,
+        "good": 800,
+        "rejected": 0,
+        "inspected": 161,
+        "detected_rejects": 0,
+        "uninspected": 639,
+        "nominal_accepted": 800,
+        "accepted_unverified": 639,
+        "tools_used": 160,
+        "tool_changes": 159,
+        "cutting_minutes": 496.1389287002503,
+        "elapsed_minutes": 4686.338928700348,
+        "working_minutes": 1806.3389287002224,
+        "available_minutes": 2400.0,
+        "downtime_minutes": {
+          "handling": 639.9999999999978,
+          "inspection": 193.1999999999996,
+          "tool_change": 477.0,
+          "shift_wait": 2880.0
+        },
+        "total_cost_eur": 6737.923660875278,
+        "cost_per_good_eur": 8.422404576094097,
+        "cost_breakdown_eur": {
+          "machine": 2257.923660875278,
+          "material": 3200.0,
+          "tools": 1280.0
+        },
+        "on_time": true,
+        "order_target": 800,
+        "completion_fraction": 1.0,
+        "final_wear": 0.1240347321750637,
+        "unused_minutes": 593.6610712997776,
+        "loaded_stock": 800,
+        "unfinished_operation": null
+      }
+    },
+    {
+      "case": "Laat wisselen",
+      "expectation": "Slijtage en verborgen afkeur.",
+      "settings": {
+        "scenario_id": "steel-shaft",
+        "mode": "week",
+        "speed_m_min": 180.0,
+        "feed_mm_rev": 0.18,
+        "change_after_parts": 80,
+        "inspect_every": 5,
+        "quantity": 800,
+        "seed": 42,
+        "logging": true,
+        "stop_on_reject": false
+      },
+      "summary": {
+        "produced": 873,
+        "good": 539,
+        "rejected": 334,
+        "inspected": 175,
+        "detected_rejects": 73,
+        "uninspected": 698,
+        "nominal_accepted": 800,
+        "accepted_unverified": 698,
+        "tools_used": 11,
+        "tool_changes": 10,
+        "cutting_minutes": 541.4116059441506,
+        "elapsed_minutes": 4359.811605944219,
+        "working_minutes": 1479.8116059441293,
+        "available_minutes": 2400.0,
+        "downtime_minutes": {
+          "handling": 698.3999999999945,
+          "inspection": 209.99999999999943,
+          "tool_change": 30.0,
+          "shift_wait": 2880.0
+        },
+        "total_cost_eur": 5429.764507430162,
+        "cost_per_good_eur": 10.073774596345384,
+        "cost_breakdown_eur": {
+          "machine": 1849.7645074301615,
+          "material": 3492.0,
+          "tools": 88.0
+        },
+        "on_time": false,
+        "order_target": 800,
+        "completion_fraction": 0.67375,
+        "final_wear": 1.8109070897559274,
+        "unused_minutes": 920.1883940558707,
+        "loaded_stock": 873,
+        "unfinished_operation": null
+      }
+    },
+    {
+      "case": "Elke inspectie",
+      "expectation": "Meer meettijd, geen automatische fysische verbetering.",
+      "settings": {
+        "scenario_id": "steel-shaft",
+        "mode": "week",
+        "speed_m_min": 180.0,
+        "feed_mm_rev": 0.18,
+        "change_after_parts": 20,
+        "inspect_every": 1,
+        "quantity": 800,
+        "seed": 42,
+        "logging": true,
+        "stop_on_reject": false
+      },
+      "summary": {
+        "produced": 800,
+        "good": 800,
+        "rejected": 0,
+        "inspected": 800,
+        "detected_rejects": 0,
+        "uninspected": 0,
+        "nominal_accepted": 800,
+        "accepted_unverified": 0,
+        "tools_used": 40,
+        "tool_changes": 39,
+        "cutting_minutes": 496.1389287002503,
+        "elapsed_minutes": 6053.138928700315,
+        "working_minutes": 2213.138928700248,
+        "available_minutes": 2400.0,
+        "downtime_minutes": {
+          "handling": 639.9999999999978,
+          "inspection": 960.0000000000135,
+          "tool_change": 117.0,
+          "shift_wait": 3840.0
+        },
+        "total_cost_eur": 6286.423660875311,
+        "cost_per_good_eur": 7.858029576094139,
+        "cost_breakdown_eur": {
+          "machine": 2766.4236608753104,
+          "material": 3200.0,
+          "tools": 320.0
+        },
+        "on_time": true,
+        "order_target": 800,
+        "completion_fraction": 1.0,
+        "final_wear": 0.49613892870025483,
+        "unused_minutes": 186.86107129975198,
+        "loaded_stock": 800,
+        "unfinished_operation": null
+      }
+    },
+    {
+      "case": "Weinig inspectie",
+      "expectation": "Minder meettijd, meer onbekende kwaliteit.",
+      "settings": {
+        "scenario_id": "steel-shaft",
+        "mode": "week",
+        "speed_m_min": 180.0,
+        "feed_mm_rev": 0.18,
+        "change_after_parts": 20,
+        "inspect_every": 100,
+        "quantity": 800,
+        "seed": 42,
+        "logging": true,
+        "stop_on_reject": false
+      },
+      "summary": {
+        "produced": 800,
+        "good": 800,
+        "rejected": 0,
+        "inspected": 9,
+        "detected_rejects": 0,
+        "uninspected": 791,
+        "nominal_accepted": 800,
+        "accepted_unverified": 791,
+        "tools_used": 40,
+        "tool_changes": 39,
+        "cutting_minutes": 496.1389287002503,
+        "elapsed_minutes": 3183.9389287002878,
+        "working_minutes": 1263.9389287002396,
+        "available_minutes": 2400.0,
+        "downtime_minutes": {
+          "handling": 639.9999999999978,
+          "inspection": 10.799999999999999,
+          "tool_change": 117.0,
+          "shift_wait": 1920.0
+        },
+        "total_cost_eur": 5099.9236608753,
+        "cost_per_good_eur": 6.374904576094125,
+        "cost_breakdown_eur": {
+          "machine": 1579.9236608752994,
+          "material": 3200.0,
+          "tools": 320.0
+        },
+        "on_time": true,
+        "order_target": 800,
+        "completion_fraction": 1.0,
+        "final_wear": 0.49613892870025483,
+        "unused_minutes": 1136.0610712997604,
+        "loaded_stock": 800,
+        "unfinished_operation": null
+      }
+    },
+    {
+      "case": "Actie na afkeur",
+      "expectation": "Meetinformatie verandert uitkomst alleen door actie.",
+      "settings": {
+        "scenario_id": "steel-shaft",
+        "mode": "week",
+        "speed_m_min": 180.0,
+        "feed_mm_rev": 0.18,
+        "change_after_parts": 80,
+        "inspect_every": 5,
+        "quantity": 800,
+        "seed": 42,
+        "logging": true,
+        "stop_on_reject": true
+      },
+      "summary": {
+        "produced": 815,
+        "good": 780,
+        "rejected": 35,
+        "inspected": 164,
+        "detected_rejects": 15,
+        "uninspected": 651,
+        "nominal_accepted": 800,
+        "accepted_unverified": 651,
+        "tools_used": 16,
+        "tool_changes": 15,
+        "cutting_minutes": 505.44153361337993,
+        "elapsed_minutes": 3319.2415336134345,
+        "working_minutes": 1399.2415336133658,
+        "available_minutes": 2400.0,
+        "downtime_minutes": {
+          "handling": 651.9999999999972,
+          "inspection": 196.79999999999956,
+          "tool_change": 45.0,
+          "shift_wait": 1920.0
+        },
+        "total_cost_eur": 5137.051917016707,
+        "cost_per_good_eur": 6.585963996175265,
+        "cost_breakdown_eur": {
+          "machine": 1749.0519170167072,
+          "material": 3260.0,
+          "tools": 128.0
+        },
+        "on_time": false,
+        "order_target": 800,
+        "completion_fraction": 0.975,
+        "final_wear": 0.9922778574005087,
+        "unused_minutes": 1000.7584663866342,
+        "loaded_stock": 815,
+        "unfinished_operation": null
+      }
+    },
+    {
+      "case": "Onmogelijke order",
+      "expectation": "Rooster begrenst output; gedeeltelijke eindoperatie.",
+      "settings": {
+        "scenario_id": "steel-shaft",
+        "mode": "week",
+        "speed_m_min": 180.0,
+        "feed_mm_rev": 0.18,
+        "change_after_parts": 20,
+        "inspect_every": 5,
+        "quantity": 5000,
+        "seed": 42,
+        "logging": true,
+        "stop_on_reject": false
+      },
+      "summary": {
+        "produced": 1325,
+        "good": 1325,
+        "rejected": 0,
+        "inspected": 266,
+        "detected_rejects": 0,
+        "uninspected": 1059,
+        "nominal_accepted": 1325,
+        "accepted_unverified": 1059,
+        "tools_used": 67,
+        "tool_changes": 66,
+        "cutting_minutes": 821.9999999998026,
+        "elapsed_minutes": 6240.0,
+        "working_minutes": 2399.9999999997885,
+        "available_minutes": 2400.0,
+        "downtime_minutes": {
+          "handling": 1060.799999999974,
+          "inspection": 319.1999999999984,
+          "tool_change": 198.0,
+          "shift_wait": 3840.0
+        },
+        "total_cost_eur": 8839.999999999736,
+        "cost_per_good_eur": 6.6716981132073485,
+        "cost_breakdown_eur": {
+          "machine": 2999.999999999736,
+          "material": 5304.0,
+          "tools": 536.0
+        },
+        "on_time": false,
+        "order_target": 5000,
+        "completion_fraction": 0.265,
+        "final_wear": 0.13483070577452533,
+        "unused_minutes": 2.1145751816220582e-10,
+        "loaded_stock": 1326,
+        "unfinished_operation": "cutting"
+      }
+    },
+    {
+      "case": "Geen goede stukken",
+      "expectation": "Kost per goed stuk niet gedefinieerd.",
+      "settings": {
+        "scenario_id": "steel-shaft",
+        "mode": "trial",
+        "speed_m_min": 180.0,
+        "feed_mm_rev": 0.4,
+        "change_after_parts": 20,
+        "inspect_every": 5,
+        "quantity": 10,
+        "seed": 42,
+        "logging": true,
+        "stop_on_reject": false
+      },
+      "summary": {
+        "produced": 10,
+        "good": 0,
+        "rejected": 10,
+        "inspected": 3,
+        "detected_rejects": 3,
+        "uninspected": 7,
+        "nominal_accepted": 7,
+        "accepted_unverified": 7,
+        "tools_used": 1,
+        "tool_changes": 0,
+        "cutting_minutes": 2.7907814739389325,
+        "elapsed_minutes": 14.390781473938942,
+        "working_minutes": 14.390781473938942,
+        "available_minutes": 2400.0,
+        "downtime_minutes": {
+          "handling": 7.999999999999999,
+          "inspection": 3.5999999999999996,
+          "tool_change": 0.0,
+          "shift_wait": 0.0
+        },
+        "total_cost_eur": 65.98847684242368,
+        "cost_per_good_eur": null,
+        "cost_breakdown_eur": {
+          "machine": 17.988476842423676,
+          "material": 40.0,
+          "tools": 8.0
+        },
+        "on_time": false,
+        "order_target": 10,
+        "completion_fraction": 0.0,
+        "final_wear": 0.14762552083250768,
+        "unused_minutes": 2385.609218526061,
+        "loaded_stock": 10,
+        "unfinished_operation": null
+      }
+    },
+    {
+      "case": "Andere seed",
+      "expectation": "Herhaal strategie met andere variatie.",
+      "settings": {
+        "scenario_id": "steel-shaft",
+        "mode": "week",
+        "speed_m_min": 180.0,
+        "feed_mm_rev": 0.18,
+        "change_after_parts": 80,
+        "inspect_every": 5,
+        "quantity": 800,
+        "seed": 2718,
+        "logging": true,
+        "stop_on_reject": false
+      },
+      "summary": {
+        "produced": 873,
+        "good": 543,
+        "rejected": 330,
+        "inspected": 175,
+        "detected_rejects": 73,
+        "uninspected": 698,
+        "nominal_accepted": 800,
+        "accepted_unverified": 698,
+        "tools_used": 11,
+        "tool_changes": 10,
+        "cutting_minutes": 541.4116059441506,
+        "elapsed_minutes": 4359.811605944219,
+        "working_minutes": 1479.8116059441293,
+        "available_minutes": 2400.0,
+        "downtime_minutes": {
+          "handling": 698.3999999999945,
+          "inspection": 209.99999999999943,
+          "tool_change": 30.0,
+          "shift_wait": 2880.0
+        },
+        "total_cost_eur": 5429.764507430162,
+        "cost_per_good_eur": 9.999566312026081,
+        "cost_breakdown_eur": {
+          "machine": 1849.7645074301615,
+          "material": 3492.0,
+          "tools": 88.0
+        },
+        "on_time": false,
+        "order_target": 800,
+        "completion_fraction": 0.67875,
+        "final_wear": 1.8109070897559274,
+        "unused_minutes": 920.1883940558707,
+        "loaded_stock": 873,
+        "unfinished_operation": null
+      }
+    },
+    {
+      "case": "Strengere eis",
+      "expectation": "Zelfde proces kan onder andere eis falen.",
+      "settings": {
+        "scenario_id": "tight-finish",
+        "mode": "week",
+        "speed_m_min": 180.0,
+        "feed_mm_rev": 0.18,
+        "change_after_parts": 20,
+        "inspect_every": 5,
+        "quantity": 800,
+        "seed": 42,
+        "logging": true,
+        "stop_on_reject": false
+      },
+      "summary": {
+        "produced": 857,
+        "good": 625,
+        "rejected": 232,
+        "inspected": 172,
+        "detected_rejects": 57,
+        "uninspected": 685,
+        "nominal_accepted": 800,
+        "accepted_unverified": 685,
+        "tools_used": 43,
+        "tool_changes": 42,
+        "cutting_minutes": 531.4888273701447,
+        "elapsed_minutes": 4429.488827370221,
+        "working_minutes": 1549.4888273701215,
+        "available_minutes": 2400.0,
+        "downtime_minutes": {
+          "handling": 685.5999999999952,
+          "inspection": 206.39999999999947,
+          "tool_change": 126.0,
+          "shift_wait": 2880.0
+        },
+        "total_cost_eur": 5708.861034212652,
+        "cost_per_good_eur": 9.134177654740244,
+        "cost_breakdown_eur": {
+          "machine": 1936.861034212652,
+          "material": 3428.0,
+          "tools": 344.0
+        },
+        "on_time": false,
+        "order_target": 800,
+        "completion_fraction": 0.78125,
+        "final_wear": 0.4217180893952166,
+        "unused_minutes": 850.5111726298785,
+        "loaded_stock": 857,
+        "unfinished_operation": null
+      }
+    }
+  ]
+}
