@@ -9,4 +9,5 @@ __pycache__/
 data/
 *.log
 artifacts/
+compose.override.yaml
 

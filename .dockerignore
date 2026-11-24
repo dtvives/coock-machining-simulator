@@ -1,0 +1,12 @@
+**
+!Dockerfile
+!requirements.lock.txt
+!frontend/
+!frontend/**
+frontend/dist/
+frontend/node_modules/
+!simulator/
+!simulator/**
+simulator/**/__pycache__/
+!scenarios/
+!scenarios/*.json

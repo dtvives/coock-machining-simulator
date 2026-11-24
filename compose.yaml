@@ -1,0 +1,8 @@
+services:
+  app:
+    build: .
+    ports:
+      - "${COOCK_PUBLISH_HOST:-127.0.0.1}:${COOCK_PORT:-8766}:8766"
+    environment:
+      COOCK_ALLOWED_HOSTS: "${COOCK_ALLOWED_HOSTS:-localhost,127.0.0.1}"
+      COOCK_ALLOWED_ORIGINS: "${COOCK_ALLOWED_ORIGINS:-http://localhost:${COOCK_PORT:-8766},http://127.0.0.1:${COOCK_PORT:-8766}}"
