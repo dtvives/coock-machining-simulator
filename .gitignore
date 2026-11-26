@@ -10,4 +10,5 @@ data/
 *.log
 artifacts/
 compose.override.yaml
+/deployment.env
 

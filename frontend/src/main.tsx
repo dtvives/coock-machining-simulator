@@ -15,8 +15,10 @@ import {
   trialTitle,
   initialView,
   measurementEvidence,
-  calculateTrial,
 } from "./ux.js";
+import { csv, markdown } from "./exports.ts";
+import { scenarios } from "./process.ts";
+import { MODEL_VERSION, simulate } from "./simulation.ts";
 import { Machine, Surface, Sampling } from "./visuals";
 
 const DEFAULT: Settings = {
@@ -33,7 +35,7 @@ const DEFAULT: Settings = {
   release_policy: "sample",
   inspection_offset: 0,
 };
-const KEY = "coock-workshop-v1";
+const KEY = "coock-workshop-browser:" + location.pathname.replace(/index\.html$/, "");
 const number = (n: number, d = 1) =>
   Number.isFinite(n)
     ? n.toLocaleString("nl-BE", { maximumFractionDigits: d })
@@ -75,6 +77,24 @@ function stable(value: unknown): string {
     );
   return JSON.stringify(value);
 }
+// Browser engines can differ in the last bits of transcendental calculations.
+function equivalentResult(a: unknown, b: unknown): boolean {
+  if (a === b) return true;
+  if (typeof a === "number" && typeof b === "number")
+    return Number.isFinite(b) && Math.abs(a - b) <= 1e-12 * Math.max(1, Math.abs(a));
+  if (a === null || b === null || typeof a !== "object" || typeof b !== "object" ||
+      Array.isArray(a) !== Array.isArray(b)) return false;
+  const left = a as Record<string, unknown>;
+  const right = b as Record<string, unknown>;
+  const keys = Object.keys(left);
+  return keys.length === Object.keys(right).length &&
+    keys.every((key) => Object.hasOwn(right, key) && equivalentResult(left[key], right[key]));
+}
+function reproduces(result: Result): boolean {
+  const computed = simulate(result.settings);
+  return stable(computed.scenario_snapshot) === stable(result.scenario_snapshot) &&
+    equivalentResult(computed, result);
+}
 function validateSession(value: unknown): Session {
   if ((value as { format?: string })?.format === "coock-workshop-v1")
     throw Error(
@@ -107,7 +127,7 @@ function validateSession(value: unknown): Session {
       !r.result.scenario_snapshot ||
       !r.result.summary ||
       !Array.isArray(r.result.parts) ||
-      r.result.model_version !== "2.0.0" ||
+      r.result.model_version !== MODEL_VERSION ||
       !Array.isArray(r.result.playback_events) ||
       !r.result.process?.profile ||
       !Array.isArray(r.result.process?.rpm_by_pass)
@@ -240,30 +260,6 @@ function initialSession(): {
     error,
   };
 }
-async function api<T>(path: string, body?: unknown): Promise<T> {
-  const response = await fetch(path, {
-    method: body === undefined ? "GET" : "POST",
-    headers: { "Content-Type": "application/json" },
-    body: body === undefined ? undefined : JSON.stringify(body),
-  });
-  if (!response.ok) {
-    let detail = "";
-    try {
-      const data = await response.json();
-      detail =
-        typeof data.detail === "string"
-          ? data.detail
-          : JSON.stringify(data.detail);
-    } catch {}
-    throw Error(
-      response.status === 422
-        ? "Controleer de invoer. " + detail
-        : "De berekening kon niet worden uitgevoerd. " + detail,
-    );
-  }
-  return response.json();
-}
-
 function Plot({
   parts,
   limit,
@@ -367,7 +363,6 @@ function App() {
   const [session, setSession] = useState<Session>(initial.session);
   const lastValidSettings = useRef(initial.session.settings);
   const [cacheBlocked, setCacheBlocked] = useState(Boolean(initial.error));
-  const [scenarios, setScenarios] = useState<Scenario[]>([]);
   const [active, setActive] = useState<string | null>(
     session.runs.at(-1)?.id ?? null,
   );
@@ -447,15 +442,6 @@ function App() {
     stable(baseline.result.scenario_snapshot) ===
       stable(result.scenario_snapshot) &&
     baseline.result.model_version === result.model_version;
-  useEffect(() => {
-    api<Scenario[]>("/api/scenarios")
-      .then(setScenarios)
-      .catch(() =>
-        setError(
-          "Geen verbinding met de lokale simulator. Start de app met Start-Workshop.ps1 en vernieuw deze pagina.",
-        ),
-      );
-  }, []);
   const [saveStatus, setSaveStatus] = useState("Bezig met lokaal bewaren…");
   useEffect(() => {
     if (cacheBlocked) return;
@@ -511,7 +497,7 @@ function App() {
       "Startinstellingen van de gekozen opdracht geladen. Eerdere proeven blijven bewaard.",
     );
   }
-  async function execute() {
+  function execute() {
     if (!validSettings(settings) || busy) { setError("Controleer de instellingen voordat je simuleert."); return; }
     if (session.runs.length >= 12) {
       setError(
@@ -523,7 +509,7 @@ function App() {
     setError("");
     setNotice("");
     try {
-      const calculated = await calculateTrial(settings, (submitted) => api<Result>("/api/simulate", submitted));
+      const calculated = simulate(settings);
       const id = createRunId();
       const newRun: Run = {
         id,
@@ -555,35 +541,17 @@ function App() {
       setBusy(false);
     }
   }
-  async function exportResult(kind: "csv" | "summary") {
+  function exportResult(kind: "csv" | "summary") {
     if (!result || !run?.revealedAt) return;
-    try {
-      const checked = await api<Result>("/api/reproduce", {
-        settings: result.settings,
-        model_version: result.model_version,
-        scenario_snapshot: result.scenario_snapshot,
-      });
-      if (stable(checked) !== stable(result)) {
-        throw Error(
-          "Deze opgeslagen proef wijkt af van de huidige berekening. Open de oorspronkelijke appversie voor een exacte export.",
-        );
-      }
-      const r = await fetch(`/api/export/${kind}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(result.settings),
-      });
-      if (!r.ok) throw Error("Export kon niet worden gemaakt.");
-      download(
-        `coock-${run?.name.replace(/[^\p{L}\p{N}-]/gu, "-")}.${kind === "csv" ? "csv" : "md"}`,
-        await r.text(),
-        kind === "csv"
-          ? "text/csv;charset=utf-8"
-          : "text/markdown;charset=utf-8",
-      );
-    } catch (e) {
-      setError((e as Error).message);
+    if (!validSettings(result.settings) || !reproduces(result)) {
+      setError("Deze opgeslagen proef wijkt af van de huidige berekening.");
+      return;
     }
+    download(
+      `coock-${run.name.replace(/[^\p{L}\p{N}-]/gu, "-")}.${kind === "csv" ? "csv" : "md"}`,
+      kind === "csv" ? csv(result) : markdown(result),
+      kind === "csv" ? "text/csv;charset=utf-8" : "text/markdown;charset=utf-8",
+    );
   }
   async function importSession(f: File) {
     setBusy(true);
@@ -593,12 +561,7 @@ function App() {
         throw Error("Het bestand is te groot (maximaal 30 MB).");
       const restored = validateSession(JSON.parse(await f.text()));
       for (const r of restored.runs) {
-        const reproduced = await api<Result>("/api/reproduce", {
-          settings: r.result.settings,
-          model_version: r.result.model_version,
-          scenario_snapshot: r.result.scenario_snapshot,
-        });
-        if (stable(reproduced) !== stable(r.result))
+        if (!reproduces(r.result))
           throw Error(
             `Proef “${r.name}” kan niet exact worden gereproduceerd. Je huidige oefening blijft behouden.`,
           );
@@ -615,7 +578,7 @@ function App() {
       setCacheBlocked(false);
       setError("");
       setActive(restored.runs.at(-1)?.id ?? null);
-      setNotice(`${restored.runs.length} proeven geopend en exact nagerekend.`);
+      setNotice(`${restored.runs.length} proeven geopend en nagerekend.`);
     } catch (e) {
       setError("Openen mislukt: " + (e as Error).message);
     } finally {
@@ -2176,7 +2139,7 @@ function App() {
             COOCK+ · Verspaningsatelier{" "}
             <small>
               Illustratieve leeromgeving · model{" "}
-              {result?.model_version ?? "2.0.0"}
+              {result?.model_version ?? MODEL_VERSION}
             </small>
           </span>
           <div>

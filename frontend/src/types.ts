@@ -57,6 +57,8 @@ export type Result = {
       width_mm: number;
     };
     passes: number;
+    pass_details: { diameter_mm: number; depth_mm: number; rpm: number; actual_speed_m_min: number; cutting_minutes: number; wear_increment: number }[];
+    wear_per_part: number;
     removed_volume_cm3: number;
   };
   summary: {
@@ -90,6 +92,7 @@ export type Result = {
     unfinished_operation: string | null;
     cost_breakdown_eur: Record<string, number>;
     unused_minutes: number;
+    loaded_stock: number;
   };
   parts: Part[];
   playback_events: ProductionEvent[];
